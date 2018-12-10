@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>listen your heart</title>
+		<style type="text/css">
+		/*实现背景图片透明，内容不透明*/
+		#music {
+			width: 400px;
+			height: 650px;
+			border-radius: 10px;
+			/*border: 5px solid #3C3C3CC8 ;*/
+			margin: 10px auto;
+			position: relative;
+			background: url(./image/music_0.jpg) no-repeat;
+			background-size: cover;
+			text-align: center;
+		}
+		#container {
+			position: absolute;
+			left: 0;
+		    right: 0;
+		    top: 0;
+		    bottom: 0;
+		    width: 400px;
+		    height: 650px;
+		    text-align: center;
+		    background:rgba(255,255,255,0.2);
+		}
+		/*实现背景图片透明，内容不透明*/
+
+		#musicImg {
+			/*position: relative;*/
+			width: 160px;
+			height: 160px;
+			border-radius: 50%;	
+			transform:scale(0.8,0.8);
+			border: 30px solid #3C3C3CC8 ;
+			/*transform:rotate(90deg);*/
+		}
+		audio {
+			padding-top: 185px;			
+			display: block;
+			margin: 10px auto;
+		}
+		#musicName {
+			padding-top: 10px;
+			line-height: 20px;
+			color: #ffb90f;
+		}
+		.btn>button {
+			width: 60px;
+			height: 30px;
+			border-radius: 10px;
+			background: skyblue;
+			outline：none;
+			box-shadow: none;
+			border:0px;
+		}
+		#cotrolbg {
+			height: 335px;
+			background:rgba(57,57,57,0.3);			
+			border-radius: 10px;
+		}
+		#musiclist {
+			/*padding-top: 30px;*/
+			line-height: 20px;
+			/*background:rgba(255,255,255,0.2);*/
+			color: #BBFFFF;
+		}
+		#playthis {
+			width: 35px;
+			height: 20px;
+			border-radius: 10px;
+			background: skyblue;
+			outline：none;
+			box-shadow: none;
+			border:0px;
+		}
+		.outer-container,.content {
+		    width: 400px; 
+		    height: 150px;
+		}
+		.outer-container {
+		    position: relative;
+		    overflow: hidden;
+		}
+		.inner-container {
+		    position: absolute; left: 0;
+		    overflow-x: hidden;
+		    overflow-y: scroll;
+		}
+
+		 /* for Chrome */
+		.inner-container::-webkit-scrollbar {
+		    display: none;
+		}
+	</style>
+</head>
+<body>
+	<div id="music">
+		<div id="container">
+			<h3 id="musicName">listen your heart</h3>
+			<img src="image/music_0.jpg" id="musicImg">
+			<div id="cotrolbg">	
+				<div id="musiclist" >
+					<h4 align="left">songs list</h4>
+					<div calss="outer-container">
+						<div class="inner-container">
+							<div class="content">
+								<table id="musicTable">
+									<tbody id="listTable">	
+										<!--
+										<tr>
+											<td><input type="checkbox" name="item" />
+											<td>100806131234</td>						
+											<td>风になる</td>
+											<td>								
+												<button id="playthis"  onclick="listplay(this)">play</button>
+											</td>
+										</tr>
+										-->
+									</tbody>
+								</table>
+							</div>
+						</div>		
+					</div>
+				</div>								
+				<audio src="./music/music_0.mp3" type="audio/mpeg" controls id="audio"></audio>
+				<div class="btn">
+					<button id="play">play</button>
+					<button id="pause">pause</button>
+					<button id="prev">prev</button>
+					<button id="next">next</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="./music.js"></script>
+	<script type="text/javascript">		
+		var play = document.getElementById('play'),
+			pause = document.getElementById('pause'),
+			prev = document.getElementById('prev'),
+			next = document.getElementById('next'),
+			musicName = document.getElementById('musicName'),
+			musicImg = document.getElementById('musicImg'),
+			bgImage = document.getElementById('music');
+
+		// 时间间隔
+	    var INTERVAL = 100;
+	    var angel = 0;
+	    // 定时器
+	    var timer = null;
+
+		var len = music.length;
+		var num = 0;
+		this.update(); //加载时自动刷新
+		//配置定时器，并设置回调
+		timer = setInterval(imgrotate, INTERVAL);
+		
+
+		//属性设置接口
+		 function setCss3(obj,objAttr){
+	        //循环属性对象
+	        for(var i in objAttr){
+	            var newi=i;
+	            //判断是否存在transform-origin这样格式的属性
+	            if(newi.indexOf("-")>0){
+	                var num=newi.indexOf("-");
+	                newi=newi.replace(newi.substr(num,2),newi.substr(num+1,1).toUpperCase());
+	            }
+	            //考虑到css3的兼容性问题,所以这些属性都必须加前缀才行
+	            obj.style[newi]=objAttr[i];
+	            newi=newi.replace(newi.charAt(0),newi.charAt(0).toUpperCase());
+	            obj.style[newi]=objAttr[i];
+	            obj.style["webkit"+newi]=objAttr[i];
+	            obj.style["moz"+newi]=objAttr[i];
+	            obj.style["o"+newi]=objAttr[i];
+	            obj.style["ms"+newi]=objAttr[i];
+	        }
+	    }
+		//旋转
+		function imgrotate(){
+			//return;
+			angel += 0.5;
+			var div=document.getElementById("musicImg");//[0];
+			console.log(div+' shuang');
+			setCss3(div,{transform:"rotate("+angel+"deg)"});//setCss3(div,{transform:"rotate("+angel+"deg)","transform-origin":"0 0"})
+		}
+		//update歌曲列表功能
+		function update(){
+			for(var i = 0; i < len; i++){
+				var oTr = document.createElement('tr');
+				var oTd1 = document.createElement('td');
+				
+				var oInput = document.createElement('input');
+				oTd1.appendChild(oInput);
+				oInput.setAttribute('type','checkbox');
+				oInput.setAttribute('name','item');
+				
+				var oTd2 = document.createElement('td');
+				oTd2.innerHTML = music[i][0];
+				var oTd3 = document.createElement('td');
+				oTd3.innerHTML = music[i][1];
+				
+				var oTd4 = document.createElement('td');
+				var obutton = document.createElement('button');	
+				obutton.setAttribute('id','playthis');
+				obutton.setAttribute('onclick','listplay(this)');
+				obutton.setAttribute('style',' position: absolute; right: 10px;');
+				obutton.innerHTML = 'play';
+				oTd4.appendChild(obutton);
+				
+				oTr.appendChild(oTd1);
+				oTr.appendChild(oTd2);
+				oTr.appendChild(oTd3);
+				oTr.appendChild(oTd4);
+				
+				var olistTable = document.getElementById('listTable');
+				olistTable.appendChild(oTr);
+			}
+		}
+			
+		//列表播放			
+		function listplay(obj){
+			console.log('click this'+obj.parentNode.parentNode.rowIndex);
+			playreq(obj.parentNode.parentNode.rowIndex);
+			audio.play();
+		}
+		//资源请求
+		function playreq(index){
+			audio.src = './music/' + 'music_' + index + '.mp3';
+			musicName.innerHTML = music[index][1];
+			bgImage.style.backgroundImage = 'url(./image/' + 'music_' + index + '.jpg)';
+			musicImg.src = './image/' + 'music_' + index + '.jpg';
+		}
+		// 播放
+		play.onclick = function(){
+			if(audio.paused){
+				audio.play();
+			}
+			
+		}
+
+		// 暂停
+		pause.onclick = function(){
+			if(audio.played){
+				audio.pause();
+			}
+		}
+
+		// 上一首
+		prev.onclick = function(){
+			num = (num + len - 1) % len;			
+			playreq(num);
+			audio.play();
+		}
+
+		// 下一首
+		next.onclick = function(){
+			num = (num + 1) % len;
+			playreq(num);
+			audio.play();
+		}
+
+		// 自动切换下一首
+		audio.addEventListener('ended',function(){
+			next.onclick();
+		},false);
+	</script>
+
+</body>
+</html>
