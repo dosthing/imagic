@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
+	<link rel="stylesheet" type="text/css" href="./css/weather.css">
+	<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=hupWCRW9pUS1mjqYheUDlDgEqbAmlSMW&callback"></script>
+	<title>JSONP请求天气信息</title>
+</head>
+<body>
+	<div id="mainbody">
+		<div id="weather">
+			<div id="navi">您所在的城市天气情况</div>
+			<div id="search">
+				<input type="text" id ="searchinput" name="weatherinput" placeholder="请输入要查询天气的城市，如：广州" style="width:350px; height:40px;background:rgba(242,242,242,0.5); font-size: 16px;color: #330000; margin-bottom: 10px;"></input>
+				<button id="searchbtn" onmouseover="mouseon(this)" style="width:80px; height:36px; background: #33A0E8; font-size: 16px;">天气查询</button>
+				<div id = "hotsearchcity" style="font-size: 16px; color: #EEB217;">
+					<div>热搜城市：<a href="#" onclick="hotcityclick(this)" style="text-decoration:none; margin-left: 5px;">北京</a> 
+						<a href="#" onclick="hotcityclick(this)" style="text-decoration:none; margin-left: 5px;">上海</a> 
+						<a href="#" onclick="hotcityclick(this)" style="text-decoration:none; margin-left: 5px;">广州</a> 
+						<a href="#" onclick="hotcityclick(this)" style="text-decoration:none; margin-left: 5px;">深圳</a>
+					</div>
+				</div>
+			</div>
+			<div  style="width: auto; height: 800px;">
+				<div id="weathercontent">
+					<div id="weathercity" style="height: 50px;margin-bottom: 20px;color: #33A0E8;"></div>
+					<div id="weatherdate"></div>
+					<div id="weatherimg" style="width: auto; height:auto;">
+						<div style="margin-left: 30px; width: 150px;margin-bottom: 20px; float: left;">
+							<div style="font-size: 18px;margin: 15px; color: #330000;" >白天</div>
+							<img id="dayimg" width="128px" height="128px" style="opacity:0.6;border-radius: 15px;"></img>
+						</div>
+						<div style="right: 30px;margin-bottom: 20px;padding-top: 1px;">
+							<div style="font-size: 18px;margin: 15px; color: #330000;" >夜晚</div>
+							<img id="nightimg" width="128px" height="128px" style="opacity:0.6;border-radius: 15px;"></img>
+						</div>
+					</div>
+					<div id="weatherinfo">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+				</div>
+				<div id="weathertipid">
+					<div id="weathertips">
+						<div style="height: 50px;margin-bottom: 20px; text-align: center; color: #33A0E8;">温馨提示</div>
+						<div>
+						<span class="tipindex">穿衣指数：</span>
+						<p class="tipitem"></p>
+					</div>
+					<div>
+						<span class="tipindex">洗车指数：</span>
+						<p class="tipitem"></p>
+					</div>
+					<div>
+						<span class="tipindex">感冒指数：</span>
+						<p class="tipitem"></p>
+					</div>
+					<div>
+						<span class="tipindex">运动指数：</span>
+						<p class="tipitem"></p>
+					</div>
+					<div>
+						<span class="tipindex">紫外线强度指数：</span>
+						<p class="tipitem"></p>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id ="footer">
+			<div>
+				<img src="./images/hongbao.png" width="150px" height="180px"  style="position:absolute; right:50px;"/>
+			</div>
+			<div style="position:relative; padding-top: 165px;">
+				<a href="https://blog.csdn.net/dosthing/" style="color: #EEB217; font-size: 20px; margin-right: 50px">CSDN 博客</a>
+				<a href="https://github.com/dosthing/" style="color: #EEB217; font-size: 20px; margin-left: 50px;">Github </a>
+			</div>
+		</div>	
+	</div>
+	<script type="text/javascript">
+		searchbtn.onclick = function(){			
+			var searchcity = document.getElementById('searchinput').value;
+			var url = 'https://api.map.baidu.com/telematics/v3/weather?&ak=hupWCRW9pUS1mjqYheUDlDgEqbAmlSMW&output=json&callback=callbackfun&location=';			
+			if(searchcity != ""){
+				url = url + encodeURI(searchcity);
+				jsonp(url)
+			}
+		}
+		function mouseon(obj){
+			obj.style.cursor = "pointer";
+		}
+		function hotcityclick(obj){			
+			var hotcity = obj.innerHTML;
+			var url = 'https://api.map.baidu.com/telematics/v3/weather?&ak=hupWCRW9pUS1mjqYheUDlDgEqbAmlSMW&output=json&callback=callbackfun&location=';	
+			url = url + encodeURI(hotcity);
+			jsonp(url)
+		}
+		//用百度地图API获得当前所在城市
+		var map = new BMap.Map('map');
+		var myCity = new BMap.LocalCity();
+		var localcity;
+		myCity.get(getcityname); //使用API取得当前城市名
+		function getcityname(result){
+			var url = 'https://api.map.baidu.com/telematics/v3/weather?&ak=hupWCRW9pUS1mjqYheUDlDgEqbAmlSMW&output=json&callback=callbackfun&location='; 		
+			localcity = result.name.replace('市', '');
+			url = url + encodeURI(localcity);
+			jsonp(url);				
+		}
+		
+		//jsonp请求接口，并处理相应内容
+		function jsonp(url){
+			var script = document.createElement('script');
+			script.src = url;
+			document.body.append(script);
+			document.body.removeChild(script);
+		}
+		function callbackfun(response){
+			//处理jsonp跨域请求返回的结果
+			var doc = document;			
+			//console.log(response);
+			//console.log(response.results[0].currentCity);
+			//console.log(response.results[0].weather_data[0].date);
+			doc.getElementById('weathercity').innerHTML = response.results[0].currentCity + '市';
+			doc.getElementById('weatherdate').innerHTML = response.results[0].weather_data[0].date;
+			var span = doc.getElementById('weatherinfo').getElementsByTagName('span');
+			var p = doc.getElementsByTagName('p');
+			var result = response.results[0].index;
+			var today = response.results[0].weather_data[1];
+			var daypic = doc.getElementById('dayimg');
+			daypic.src = today.dayPictureUrl;
+			var nightpic = doc.getElementById('nightimg');
+			nightpic.src = today.nightPictureUrl;
+			//console.log(today);
+			var i = 0;
+			for (var index in result){
+				for (var item in result[index]){
+					if (item == 'des'){
+						p[i].innerHTML = result[index][item];
+						console.log(result[index][item]);
+						i++;
+					}
+				}
+			}
+			span[0].innerHTML = today.weather;
+			span[1].innerHTML = today.wind;
+			span[2].innerHTML = today.temperature;
+			span[3] = response.results[0].pm25;			
+		}
+	</script>
+</body>
+</html>

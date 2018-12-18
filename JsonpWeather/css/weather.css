@@ -1,0 +1,87 @@
+body, html,#mainbody {
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		margin:0;
+		font-family:"微软雅黑";
+		background: url(../images/weatherbackground.jpg) no-repeat;  
+		background-size: cover;
+	}
+#mainbody{
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;		
+}
+#weather{
+	width: auto;
+	height: 800px;
+}
+#navi{	
+	width: 100%;
+	height: 50px;		
+	background:rgba(242,242,242,0.1);
+	border-radius: 15px;
+	text-align: center;
+	padding: 18px;
+	margin-bottom: 20px;
+	font-size: 24px;
+	color: #EEB217;
+
+}
+#search{	
+	width: 100%;
+	height: 80px;		
+	background:rgba(242,242,242,0.5);
+	border-radius: 15px;
+	text-align: center;
+	padding: 18px;
+	margin-bottom: 20px;
+	font-size: 24px;
+	color: #EEB217;
+
+}
+#weathercontent{
+	/*margin-top:15px;*/
+	width: 450px;
+	height: 550px;		
+	float: left;
+	border-radius: 15px;
+	background:rgba(242,242,242,0.5);
+	text-align: center;
+	padding: 10px;
+	font-size: 24px;
+	color: #EEB217;
+}
+#weathertipid{
+	margin-top:20px;
+	width: auto;
+	height: 550px;		
+	margin-left: 530px;
+	border-radius: 15px;
+	background:rgba(242,242,242,0.5);		
+	text-align: left;
+	padding: 10px;
+	font-size: 24px;
+	color: #EEB217;
+}
+#weathertips{		
+
+}
+.tipindex{
+	font-size: 18px;
+	color: #EEB217;
+}
+.tipitem{
+	font-size: 16px;
+	color: #330000;
+}
+#footer{
+	width: 100%;
+	height: 220px;
+	border-radius: 15px;
+	background:rgba(242,242,242,0.01);		
+	text-align: center;			
+	position:fixed; 
+	left:0px; 
+	bottom:0px; 
+}
