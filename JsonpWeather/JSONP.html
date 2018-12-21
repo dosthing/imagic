@@ -13,7 +13,7 @@
 		<div id="weather">
 			<div id="navi">您所在的城市天气情况</div>
 			<div id="search">
-				<input type="text" id ="searchinput" name="weatherinput" placeholder="请输入要查询天气的城市，如：广州" style="width:350px; height:40px;background:rgba(242,242,242,0.5); font-size: 16px;color: #330000; margin-bottom: 10px;"></input>
+				<input type="text" id ="searchinput" name="weatherinput" onkeydown="keyup_submit(event);" placeholder="请输入要查询天气的城市，如：广州" style="width:350px; height:40px;background:rgba(242,242,242,0.5); font-size: 16px;color: #330000; margin-bottom: 10px;"></input>
 				<button id="searchbtn" onmouseover="mouseon(this)" style="width:80px; height:36px; background: #33A0E8; font-size: 16px;">天气查询</button>
 				<div id = "hotsearchcity" style="font-size: 16px; color: #EEB217;">
 					<div>热搜城市：<a href="#" onclick="hotcityclick(this)" style="text-decoration:none; margin-left: 5px;">北京</a> 
@@ -98,6 +98,15 @@
 			var url = 'https://api.map.baidu.com/telematics/v3/weather?&ak=hupWCRW9pUS1mjqYheUDlDgEqbAmlSMW&output=json&callback=callbackfun&location=';	
 			url = url + encodeURI(hotcity);
 			jsonp(url)
+		}
+		function keyup_submit(e){ 
+		 var evt = window.event || e; 
+		  if (evt.keyCode == 13){
+			ar searchcity = document.getElementById('searchinput').value;
+			var url = 'https://api.map.baidu.com/telematics/v3/weather?&ak=hupWCRW9pUS1mjqYheUDlDgEqbAmlSMW&output=json&callback=callbackfun&location=';	
+			url = url + encodeURI(searchcity);
+			jsonp(url)
+		  }
 		}
 		//用百度地图API获得当前所在城市
 		var map = new BMap.Map('map');

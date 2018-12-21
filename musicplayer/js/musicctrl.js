@@ -183,3 +183,59 @@ next.onclick = function(){
 audio.addEventListener('ended',function(){
 	next.onclick();
 },false);
+
+//键盘事件监测
+
+ document.onkeydown=function(event){
+	//alert('按下了'+ event.keyCode);
+	//-> 下一首
+	if (event.keyCode === 39){ 
+		next.onclick(); 
+	}
+	//<- 上一首
+	if (event.keyCode === 37){ 
+		prev.onclick(); 
+	}
+	//空格 暂停/播放
+	if (event.keyCode === 32){ 
+		//console.log(audio.paused);
+		//console.log(audio.played);
+		if(audio.paused){
+			audio.play();			
+		}
+		else{		
+			audio.pause();
+		}
+	}
+	//音量增加
+	if (event.keyCode === 38){
+		//console.log(audio.volume);
+		if(audio.volume >= 0.9){
+			//alert('音量已经调至最大');
+			console.log('音量已经调至最大');
+			return;
+		}
+		if(audio.volume >= 0.2){
+			audio.volume = audio.volume + 0.08;
+		}else{
+			audio.volume = audio.volume + 0.01;
+		}		
+	}
+	//音量降低
+	if (event.keyCode === 40){
+		//console.log(audio.volume);
+		if(audio.volume <= 0.01){
+			//alert('音量已经调至最小');
+			console.log('音量已经调至最小');
+			return;
+		}
+		if(audio.volume >= 0.2){
+			audio.volume = audio.volume - 0.1;
+		}else{
+			audio.volume = audio.volume - 0.01;
+		}
+		
+	}
+	
+}	
+
