@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+	body, html,#allmap {
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		margin:0;
+		font-family:"微软雅黑"; 
+	}
+	#nav{
+		width: 100%;
+		height: 60px;
+		background: url(./mapnav.png); 
+		background-size: cover;
+	}
+	#mapsearch{
+		width: 100%;
+		height: 60px;
+		background:rgba(242,242,242,0.1);		
+		border-radius: 15px;
+		float:top;
+	}
+	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=eakY1xIF0A4bFdvIgaSA5EmvyDQDuuXl"></script>
+	<title>地图展示</title>
+</head>
+<body>
+	<div id="nav">
+		<div id="mapsearch">			
+			<div style="font-size: 16px; padding-top: 8px; padding-left: 15px; color: #FF3030;">热搜词：
+				<a href="#" onclick="hotcityclick(this)" style="text-decoration:none; margin-left: 5px;">天安门</a> 
+				<a href="#" onclick="hotcityclick(this)" style="text-decoration:none; margin-left: 5px;">桂林山水</a> 
+				<a href="#" onclick="hotcityclick(this)" style="text-decoration:none; margin-left: 5px;">天涯海角</a> 
+				<a href="#" onclick="hotcityclick(this)" style="text-decoration:none; margin-left: 5px;">世界之窗</a>
+				<a href="#" onclick="hotcityclick(this)" style="text-decoration:none; margin-left: 5px;">希尔顿酒店</a>
+				<a href="#" onclick="hotcityclick(this)" style="text-decoration:none; margin-left: 5px;">KTV</a>
+				<a href="#" onclick="hotcityclick(this)" style="text-decoration:none; margin-left: 5px;">美食街</a>
+				<a href="#" onclick="hotcityclick(this)" style="text-decoration:none; margin-left: 5px;">景点</a>				
+				<input type="text" id ="searchinput" name="weatherinput" placeholder="请输入要查询的地名或景点，如：广州塔" style="width:400px; height:32px;background:rgba(242,242,242,0.5);	margin-left:120px;  font-size: 16px;color: #330000;"></input>
+				<button id="searchbtn" onmouseover="mouseon(this)" style="width:80px; height:32px; background: #CFE2F3; font-size: 16px;">Search</button>
+			</div>		
+
+		</div>
+	</div>
+	<div id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript">
+	// 百度地图API功能
+	var map = new BMap.Map("allmap");    // 创建Map实例
+	map.centerAndZoom(new BMap.Point(113.204, 23.215), 11);  // 初始化地图,设置中心点坐标和地图级别
+	//添加地图类型控件
+	map.addControl(new BMap.MapTypeControl({
+		mapTypes:[
+            BMAP_NORMAL_MAP,
+            BMAP_HYBRID_MAP
+        ]}));	  
+	map.setCurrentCity("广州");          // 设置地图显示的城市 此项是必须设置的
+	map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+	var local = new BMap.LocalSearch(map, {
+		renderOptions:{map: map}
+	});
+	function hotcityclick(obj){			
+		var hotsearch = obj.innerHTML;
+		local.search(hotsearch);
+	}
+	searchbtn.onclick = function(){			
+		var searchplace = document.getElementById('searchinput').value;					
+		if(searchplace != ""){
+			local.search(searchplace);
+		}
+	}
+</script>
