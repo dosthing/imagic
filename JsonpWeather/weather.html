@@ -102,7 +102,7 @@
 		function keyup_submit(e){ 
 		 var evt = window.event || e; 
 		  if (evt.keyCode == 13){
-			ar searchcity = document.getElementById('searchinput').value;
+			var searchcity = document.getElementById('searchinput').value;
 			var url = 'https://api.map.baidu.com/telematics/v3/weather?&ak=hupWCRW9pUS1mjqYheUDlDgEqbAmlSMW&output=json&callback=callbackfun&location=';	
 			url = url + encodeURI(searchcity);
 			jsonp(url)
