@@ -21,4 +21,5 @@ var music=[
 	['music_19','勇气(英文版)'],
 	['music_20','Keep On Loving You'], 	
 	['music_21','有故事的人'], 	
+	['music_22','丝丝记忆'], 	
 ]; 
