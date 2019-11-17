@@ -35,7 +35,7 @@ tar -zxvf nginx-1.6.2.tar.gz
 cd nginx-1.6.2
  
 #配置 编译 安装
-./configure
+./configure --prefix=/usr/local/nginx --with-http_ssl_module
 make
 make install
  
