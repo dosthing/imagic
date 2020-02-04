@@ -6,4 +6,5 @@ node_modules/
 SpringAll/
 SpringBoot-MyBatis/
 springsecuritydemo/
+MyBatis-Spring-Boot/
 .deploy*/
