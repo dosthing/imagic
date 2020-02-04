@@ -6,7 +6,6 @@ gulpfile.js
 *.log
 *.yml
 node_modules/
-public/
 scaffolds/
 themes/
 .deploy*/
